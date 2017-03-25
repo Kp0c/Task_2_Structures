@@ -4,33 +4,13 @@
 #include <exception>
 #include "any_type_helper.h"
 
-/* included types:
- *bool
- *
- *signed char
- *unsigned char
- *wchar_t
- *
- *short
- *unsigned short
- *int
- *unsigned int
- *long int
- *unsigned long int
- *long long int
- *unsigned long long int
- *
- *float
- *double
- *long double
- */
 namespace any_type
 {
 
 class AnyType
 {
 private:
-	static inline bool isTypesMatch(AnyType a,AnyType b)
+	static inline bool isTypesMatch(const AnyType& a, const AnyType& b)
 	{
 		if (a.selected_type == b.selected_type)
 		{
@@ -43,7 +23,7 @@ private:
 	}
 	static inline bool isTypesMatch(any_type_helper::Type a, any_type_helper::Type b)
 	{
-		if(a == b)
+		if (a == b)
 		{
 			return true;
 		}
@@ -57,7 +37,7 @@ private:
 	T doOperationForIntegers(T a, T b, any_type_helper::OperationType operation) const;
 	template<typename T>
 	T doOperationForRational(T a, T b, any_type_helper::OperationType operation) const;
-	AnyType doOperation(AnyType a, AnyType b, any_type_helper::OperationType operation) const;
+	AnyType doOperation(const AnyType& a, const AnyType& b, any_type_helper::OperationType operation) const;
 
 	any_type_helper::AnyValue value;
 	any_type_helper::Type selected_type;

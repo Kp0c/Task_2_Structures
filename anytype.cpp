@@ -71,7 +71,7 @@ T AnyType::doOperationForRational(T a, T b, OperationType operation) const
 	}
 }
 
-AnyType AnyType::doOperation(AnyType a, AnyType b, OperationType operation) const
+AnyType AnyType::doOperation(const AnyType& a, const AnyType& b, OperationType operation) const
 {
 	if(isTypesMatch(a, b))
 	{
@@ -237,121 +237,121 @@ AnyType::AnyType(const AnyType& another)
 bool AnyType::GetBool() const
 {
 	if(isTypesMatch(selected_type,Type::BOOL))
-	{
 		return value.b;
-	}
+	else
+		throw std::bad_cast();
 }
 
 char AnyType::GetChar() const
 {
 	if(isTypesMatch(selected_type,Type::CHAR))
-	{
 		return value.c;
-	}
+	else
+		throw std::bad_cast();
 }
 
 unsigned char AnyType::GetUnsignedChar() const
 {
 	if(isTypesMatch(selected_type,Type::UCHAR))
-	{
 		return value.uc;
-	}
+	else
+		throw std::bad_cast();
 }
 
 wchar_t AnyType::GetWChar_t() const
 {
 	if(isTypesMatch(selected_type,Type::WCHAR_T))
-	{
 		return value.wc_t;
-	}
+	else
+		throw std::bad_cast();
 }
 
 short AnyType::GetShort() const
 {
 	if(isTypesMatch(selected_type,Type::SHORT))
-	{
 		return value.s;
-	}
+	else
+		throw std::bad_cast();
 }
 
 unsigned short AnyType::GetUnsignedShort() const
 {
 	if(isTypesMatch(selected_type,Type::USHORT))
-	{
 		return value.us;
-	}
+	else
+		throw std::bad_cast();
 }
 
 int AnyType::GetInt() const
 {
 	if(isTypesMatch(selected_type,Type::INT))
-	{
 		return value.i;
-	}
+	else
+		throw std::bad_cast();
 }
 
 unsigned int AnyType::GetUnsignedInt() const
 {
 	if(isTypesMatch(selected_type,Type::UINT))
-	{
 		return value.ui;
-	}
+	else
+		throw std::bad_cast();
 }
 
 long AnyType::GetLongInt() const
 {
 	if(isTypesMatch(selected_type,Type::LONG))
-	{
 		return value.l;
-	}
+	else
+		throw std::bad_cast();
 }
 
 unsigned long AnyType::GetUnsignedLongInt() const
 {
 	if(isTypesMatch(selected_type,Type::ULONG))
-	{
 		return value.ul;
-	}
+	else
+		throw std::bad_cast();
 }
 
 long long AnyType::GetLongLongInt() const
 {
 	if(isTypesMatch(selected_type,Type::LONG_LONG))
-	{
 		return value.ll;
-	}
+	else
+		throw std::bad_cast();
 }
 
 unsigned long long AnyType::GetUnsignedLongLongInt() const
 {
 	if(isTypesMatch(selected_type,Type::ULONG_LONG))
-	{
 		return value.ull;
-	}
+	else
+		throw std::bad_cast();
 }
 
 float AnyType::GetFloat() const
 {
 	if(isTypesMatch(selected_type,Type::FLOAT))
-	{
 		return value.f;
-	}
+	else
+		throw std::bad_cast();
 }
 
 double AnyType::GetDouble() const
 {
 	if(isTypesMatch(selected_type,Type::DOUBLE))
-	{
 		return value.d;
-	}
+	else
+		throw std::bad_cast();
 }
 
 long double AnyType::GetLongDouble() const
 {
 	if(isTypesMatch(selected_type,Type::LONG_DOUBLE))
-	{
 		return value.ld;
-	}
+	else
+		throw std::bad_cast();
 }
 
 std::string AnyType::GetType() const

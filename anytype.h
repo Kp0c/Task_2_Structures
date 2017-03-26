@@ -13,7 +13,7 @@ class AnyType
 private:
 	static inline bool IsTypesMatch(const AnyType& a, const AnyType& b)
 	{
-		return  IsTypesMatch(a.selected_type, b.selected_type);
+		return IsTypesMatch(a.selected_type, b.selected_type);
 	}
 
 	static inline bool IsTypesMatch(any_type_helper::Type a, any_type_helper::Type b)
@@ -25,7 +25,8 @@ private:
 	T DoOperationForIntegers(T a, T b, any_type_helper::OperationType operation) const;
 	template<typename T>
 	T DoOperationForRational(T a, T b, any_type_helper::OperationType operation) const;
-	AnyType DoOperation(const AnyType& a, const AnyType& b, any_type_helper::OperationType operationd) const;
+	AnyType DoOperation(const AnyType& a, const AnyType& b,
+						any_type_helper::OperationType operation) const;
 
 	any_type_helper::AnyValue value;
 	any_type_helper::Type selected_type;

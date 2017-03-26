@@ -1,22 +1,42 @@
-#include <main.h>
-#include <iostream>
+#include "main.h"
+
+void PrintAnyType(const any_type::AnyType& anyType)
+{
+	std::cout << "Type: " << anyType.GetType() << std::endl;
+	std::cout << "Value: " << anyType << std::endl;
+}
 
 int main()
 {
-	any_type::AnyType a = 1;
-	a = true;
-	a = 1.7;
+	any_type::AnyType a = 0;
+	any_type::AnyType b = 1;
+	std::swap(a, b);
 	try
 	{
-		int stored = a.GetInt();
+		a/=b;
 	}
-	catch(std::exception e)
+	catch (std::exception& e)
 	{
 		std::cout << e.what() << std::endl;
 	}
-
+	PrintAnyType(a);
+	PrintAnyType(b);
+	std::swap(a, b);
+	PrintAnyType(a);
+	PrintAnyType(b);
+	try
+	{
 	double stored = a.GetDouble();
+	a += 5.6;
 
+	a.Destroy();
+
+	a = 'a';
 	std::cout << a << std::endl;
+	}
+	catch (std::exception& e)
+	{
+		std::cout << e.what() << std::endl;
+	}
 	return 0;
 }

@@ -13,7 +13,8 @@ namespace any_type
 template<typename T>
 T AnyType::DoOperationForIntegers(T a, T b, OperationType operation) const
 {
-	switch (operation) {
+	switch (operation)
+	{
 	case OperationType::PLUS:
 		return a + b;
 		break;
@@ -24,13 +25,13 @@ T AnyType::DoOperationForIntegers(T a, T b, OperationType operation) const
 		return a * b;
 		break;
 	case OperationType::DIVIDE:
-		if(b!=0)
+		if (b!=0)
 			return a / b;
 		else
 			throw std::overflow_error("Divide by zero");
 		break;
 	case OperationType::MODULO:
-		if(b!=0)
+		if (b!=0)
 			return a % b;
 		else
 			throw std::overflow_error("Modulo by zero");
@@ -69,7 +70,7 @@ T AnyType::DoOperationForRational(T a, T b, OperationType operation) const
 		return a * b;
 		break;
 	case OperationType::DIVIDE:
-		if(b!=0)
+		if (b!=0)
 			return a / b;
 		else
 			throw std::overflow_error("Divide by zero");
@@ -82,7 +83,7 @@ T AnyType::DoOperationForRational(T a, T b, OperationType operation) const
 
 AnyType AnyType::DoOperation(const AnyType& a, const AnyType& b, OperationType operation) const
 {
-	if(IsTypesMatch(a, b))
+	if (IsTypesMatch(a, b))
 	{
 		AnyType to_return(0);
 		to_return.selected_type = a.selected_type;
@@ -245,7 +246,7 @@ AnyType::AnyType(const AnyType& another)
 
 bool AnyType::GetBool() const
 {
-	if(IsTypesMatch(selected_type,Type::BOOL))
+	if (IsTypesMatch(selected_type, Type::BOOL))
 		return value.b;
 	else
 		throw std::bad_cast();
@@ -253,7 +254,7 @@ bool AnyType::GetBool() const
 
 char AnyType::GetChar() const
 {
-	if(IsTypesMatch(selected_type,Type::CHAR))
+	if (IsTypesMatch(selected_type, Type::CHAR))
 		return value.c;
 	else
 		throw std::bad_cast();
@@ -261,7 +262,7 @@ char AnyType::GetChar() const
 
 unsigned char AnyType::GetUnsignedChar() const
 {
-	if(IsTypesMatch(selected_type,Type::UCHAR))
+	if (IsTypesMatch(selected_type, Type::UCHAR))
 		return value.uc;
 	else
 		throw std::bad_cast();
@@ -269,7 +270,7 @@ unsigned char AnyType::GetUnsignedChar() const
 
 wchar_t AnyType::GetWChar_t() const
 {
-	if(IsTypesMatch(selected_type,Type::WCHAR_T))
+	if (IsTypesMatch(selected_type, Type::WCHAR_T))
 		return value.wc_t;
 	else
 		throw std::bad_cast();
@@ -277,7 +278,7 @@ wchar_t AnyType::GetWChar_t() const
 
 short AnyType::GetShort() const
 {
-	if(IsTypesMatch(selected_type,Type::SHORT))
+	if (IsTypesMatch(selected_type, Type::SHORT))
 		return value.s;
 	else
 		throw std::bad_cast();
@@ -285,7 +286,7 @@ short AnyType::GetShort() const
 
 unsigned short AnyType::GetUnsignedShort() const
 {
-	if(IsTypesMatch(selected_type,Type::USHORT))
+	if (IsTypesMatch(selected_type, Type::USHORT))
 		return value.us;
 	else
 		throw std::bad_cast();
@@ -293,7 +294,7 @@ unsigned short AnyType::GetUnsignedShort() const
 
 int AnyType::GetInt() const
 {
-	if(IsTypesMatch(selected_type,Type::INT))
+	if (IsTypesMatch(selected_type, Type::INT))
 		return value.i;
 	else
 		throw std::bad_cast();
@@ -301,7 +302,7 @@ int AnyType::GetInt() const
 
 unsigned int AnyType::GetUnsignedInt() const
 {
-	if(IsTypesMatch(selected_type,Type::UINT))
+	if (IsTypesMatch(selected_type, Type::UINT))
 		return value.ui;
 	else
 		throw std::bad_cast();
@@ -309,7 +310,7 @@ unsigned int AnyType::GetUnsignedInt() const
 
 long AnyType::GetLongInt() const
 {
-	if(IsTypesMatch(selected_type,Type::LONG))
+	if (IsTypesMatch(selected_type, Type::LONG))
 		return value.l;
 	else
 		throw std::bad_cast();
@@ -317,7 +318,7 @@ long AnyType::GetLongInt() const
 
 unsigned long AnyType::GetUnsignedLongInt() const
 {
-	if(IsTypesMatch(selected_type,Type::ULONG))
+	if (IsTypesMatch(selected_type, Type::ULONG))
 		return value.ul;
 	else
 		throw std::bad_cast();
@@ -325,7 +326,7 @@ unsigned long AnyType::GetUnsignedLongInt() const
 
 long long AnyType::GetLongLongInt() const
 {
-	if(IsTypesMatch(selected_type,Type::LONG_LONG))
+	if (IsTypesMatch(selected_type, Type::LONG_LONG))
 		return value.ll;
 	else
 		throw std::bad_cast();
@@ -333,7 +334,7 @@ long long AnyType::GetLongLongInt() const
 
 unsigned long long AnyType::GetUnsignedLongLongInt() const
 {
-	if(IsTypesMatch(selected_type,Type::ULONG_LONG))
+	if (IsTypesMatch(selected_type, Type::ULONG_LONG))
 		return value.ull;
 	else
 		throw std::bad_cast();
@@ -341,7 +342,7 @@ unsigned long long AnyType::GetUnsignedLongLongInt() const
 
 float AnyType::GetFloat() const
 {
-	if(IsTypesMatch(selected_type,Type::FLOAT))
+	if (IsTypesMatch(selected_type, Type::FLOAT))
 		return value.f;
 	else
 		throw std::bad_cast();
@@ -349,7 +350,7 @@ float AnyType::GetFloat() const
 
 double AnyType::GetDouble() const
 {
-	if(IsTypesMatch(selected_type,Type::DOUBLE))
+	if (IsTypesMatch(selected_type, Type::DOUBLE))
 		return value.d;
 	else
 		throw std::bad_cast();
@@ -357,7 +358,7 @@ double AnyType::GetDouble() const
 
 long double AnyType::GetLongDouble() const
 {
-	if(IsTypesMatch(selected_type,Type::LONG_DOUBLE))
+	if (IsTypesMatch(selected_type, Type::LONG_DOUBLE))
 		return value.ld;
 	else
 		throw std::bad_cast();

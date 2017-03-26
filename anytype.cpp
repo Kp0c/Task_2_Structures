@@ -453,6 +453,7 @@ void swap(AnyType& a, AnyType& b)
 }
 
 //disable warnings about some bad operations, because it's up to user
+#pragma warning(push)
 #pragma warning(disable:4800)
 #pragma warning(disable:4804)
 
@@ -596,7 +597,6 @@ AnyType AnyType::DoOperation(const AnyType& a, const AnyType& b, OperationType o
 }
 
 //enable warnings back, bad section is behind.
-#pragma warning(default:4800)
-#pragma warning(default:4804)
+#pragma warning(pop)
 
 } //any_type

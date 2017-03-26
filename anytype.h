@@ -2,7 +2,7 @@
 
 #include <ostream>
 #include <exception>
-#include <functional>
+
 #include "any_type_helper.h"
 
 namespace any_type
@@ -11,34 +11,21 @@ namespace any_type
 class AnyType
 {
 private:
-	static inline bool isTypesMatch(const AnyType& a, const AnyType& b)
+	static inline bool IsTypesMatch(const AnyType& a, const AnyType& b)
 	{
-		if (a.selected_type == b.selected_type)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return  IsTypesMatch(a.selected_type, b.selected_type);
 	}
-	static inline bool isTypesMatch(any_type_helper::Type a, any_type_helper::Type b)
+
+	static inline bool IsTypesMatch(any_type_helper::Type a, any_type_helper::Type b)
 	{
-		if (a == b)
-		{
-			return true;
-		}
-		else
-		{
-			throw std::bad_cast();
-		}
+		return a == b;
 	}
 
 	template<typename T>
-	T doOperationForIntegers(T a, T b, any_type_helper::OperationType operation) const;
+	T DoOperationForIntegers(T a, T b, any_type_helper::OperationType operation) const;
 	template<typename T>
-	T doOperationForRational(T a, T b, any_type_helper::OperationType operation) const;
-	AnyType doOperation(const AnyType& a, const AnyType& b, any_type_helper::OperationType operationd) const;
+	T DoOperationForRational(T a, T b, any_type_helper::OperationType operation) const;
+	AnyType DoOperation(const AnyType& a, const AnyType& b, any_type_helper::OperationType operationd) const;
 
 	any_type_helper::AnyValue value;
 	any_type_helper::Type selected_type;
@@ -64,7 +51,7 @@ public:
 
 	inline void Destroy()
 	{
-		value.i = 0;
+		value.ll = 0;
 		selected_type = any_type_helper::Type::NONE;
 	}
 
@@ -88,18 +75,18 @@ public:
 	std::string GetType() const;
 
 	//Operators overload area
-	AnyType operator +(const AnyType& right) const;
-	AnyType operator -(const AnyType& right) const;
-	AnyType operator *(const AnyType& right) const;
-	AnyType operator /(const AnyType& right) const;
-	AnyType operator %(const AnyType& right) const;
-	AnyType operator &(const AnyType& right) const;
-	AnyType operator |(const AnyType& right) const;
-	AnyType operator ^(const AnyType& right) const;
-	AnyType operator <<(const AnyType& right) const;
-	AnyType operator >>(const AnyType& right) const;
+	AnyType operator+(const AnyType& right) const;
+	AnyType operator-(const AnyType& right) const;
+	AnyType operator*(const AnyType& right) const;
+	AnyType operator/(const AnyType& right) const;
+	AnyType operator%(const AnyType& right) const;
+	AnyType operator&(const AnyType& right) const;
+	AnyType operator|(const AnyType& right) const;
+	AnyType operator^(const AnyType& right) const;
+	AnyType operator<<(const AnyType& right) const;
+	AnyType operator>>(const AnyType& right) const;
 	//Assignment operators
-	AnyType& operator= (const AnyType& right);
+	AnyType& operator=(const AnyType& right);
 	AnyType& operator+=(const AnyType& right);
 	AnyType& operator-=(const AnyType& right);
 	AnyType& operator*=(const AnyType& right);

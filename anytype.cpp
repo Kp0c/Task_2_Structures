@@ -577,11 +577,11 @@ std::ostream& operator<<(std::ostream& o, const AnyType& obj)
 	return o;
 }
 
-} //any_type
-
-//full specialization of std::swap
-template<>
-void std::swap<any_type::AnyType>(any_type::AnyType& a, any_type::AnyType& b)
+void swap(AnyType& a, AnyType& b)
 {
-	a.swap(b);
+	using std::swap;
+	swap(a.value, b.value);
+	swap(a.selected_type, b.selected_type);
 }
+
+} //any_type

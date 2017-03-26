@@ -2,6 +2,7 @@
 
 #include <ostream>
 #include <exception>
+#include <functional>
 #include "any_type_helper.h"
 
 namespace any_type
@@ -37,7 +38,7 @@ private:
 	T doOperationForIntegers(T a, T b, any_type_helper::OperationType operation) const;
 	template<typename T>
 	T doOperationForRational(T a, T b, any_type_helper::OperationType operation) const;
-	AnyType doOperation(const AnyType& a, const AnyType& b, any_type_helper::OperationType operation) const;
+	AnyType doOperation(const AnyType& a, const AnyType& b, any_type_helper::OperationType operationd) const;
 
 	any_type_helper::AnyValue value;
 	any_type_helper::Type selected_type;
@@ -65,14 +66,6 @@ public:
 	{
 		value.i = 0;
 		selected_type = any_type_helper::Type::NONE;
-	}
-
-	inline void swap(AnyType& another)
-	{
-		using std::swap;
-
-		swap(value, another.value);
-		swap(selected_type, another.selected_type);
 	}
 
 	//geters
@@ -117,8 +110,10 @@ public:
 	AnyType& operator^=(const AnyType& right);
 	AnyType& operator<<=(const AnyType& right);
 	AnyType& operator>>=(const AnyType& right);
-	//Output operator
+	//friends
 	friend std::ostream& operator<<(std::ostream& o, const AnyType& obj);
+
+	friend void swap(AnyType& a, AnyType& b);
 };
 
 }

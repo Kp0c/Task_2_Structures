@@ -47,6 +47,7 @@ public:
 	AnyType(float value);
 	AnyType(double value);
 	AnyType(long double value);
+
 	//Copy ctor
 	AnyType(const AnyType& another);
 
@@ -86,6 +87,7 @@ public:
 	AnyType operator^(const AnyType& right) const;
 	AnyType operator<<(const AnyType& right) const;
 	AnyType operator>>(const AnyType& right) const;
+
 	//Assignment operators
 	AnyType& operator=(const AnyType& right);
 	AnyType& operator+=(const AnyType& right);
@@ -98,9 +100,9 @@ public:
 	AnyType& operator^=(const AnyType& right);
 	AnyType& operator<<=(const AnyType& right);
 	AnyType& operator>>=(const AnyType& right);
+
 	//friends
 	friend std::ostream& operator<<(std::ostream& o, const AnyType& obj);
-
 	friend void swap(AnyType& a, AnyType& b);
 };
 

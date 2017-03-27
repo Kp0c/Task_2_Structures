@@ -64,6 +64,8 @@ public:
 	AnyType& operator^=(const AnyType& right);
 	AnyType& operator<<=(const AnyType& right);
 	AnyType& operator>>=(const AnyType& right);
+
+	//move assignment operator
     AnyType& operator=(AnyType&& right);
 
 	//geters
@@ -98,10 +100,6 @@ private:
 		return a == b;
 	}
 
-	template<typename T>
-	T DoOperationForIntegers(T a, T b, any_type_helper::OperationType operation) const;
-	template<typename T>
-	T DoOperationForRational(T a, T b, any_type_helper::OperationType operation) const;
 	AnyType DoOperation(const AnyType& a, const AnyType& b,
 						any_type_helper::OperationType operation) const;
 

@@ -99,7 +99,7 @@ AnyType::AnyType(long double value)
 AnyType::AnyType(const AnyType& another)
 {
 	this->selected_type = another.selected_type;
-    this->value = another.value;
+	this->value = another.value;
 }
 
 AnyType::AnyType(AnyType&& another)
@@ -220,7 +220,7 @@ AnyType& AnyType::operator=(AnyType&& right)
 	this->selected_type = std::move(right.selected_type);
 	this->value = std::move(right.value);
 
-    return *this;
+	return *this;
 }
 
 bool AnyType::GetBool() const
@@ -465,7 +465,7 @@ std::ostream& operator<<(std::ostream& output, const AnyType& obj)
 #pragma warning(disable:4804)
 
 template<typename T>
-T AnyType::DoOperationForIntegers(T a, T b, OperationType operation) const
+T DoOperationForIntegers(T a, T b, OperationType operation)
 {
 	switch (operation)
 	{
@@ -512,7 +512,7 @@ T AnyType::DoOperationForIntegers(T a, T b, OperationType operation) const
 }
 
 template<typename T>
-T AnyType::DoOperationForRational(T a, T b, OperationType operation) const
+T DoOperationForRational(T a, T b, OperationType operation)
 {
 	switch (operation) {
 	case OperationType::PLUS:

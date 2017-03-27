@@ -104,9 +104,8 @@ AnyType::AnyType(const AnyType& another)
 
 AnyType::AnyType(AnyType&& another)
 {
-    this->selected_type = another.selected_type;
-    this->value = another.value;
-    another.Destroy();
+	this->selected_type = std::move(another.selected_type);
+	this->value = std::move(another.value);
 }
 
 AnyType AnyType::operator+(const AnyType& right) const
@@ -218,10 +217,8 @@ AnyType& AnyType::operator>>=(const AnyType& right)
 
 AnyType& AnyType::operator=(AnyType&& right)
 {
-    this->selected_type = right.selected_type;
-    this->value = right.value;
-	
-    right.Destroy();
+	this->selected_type = std::move(right.selected_type);
+	this->value = std::move(right.value);
 
     return *this;
 }

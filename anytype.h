@@ -85,8 +85,7 @@ public:
 	std::string GetType() const;
 
 	//friends
-	friend std::ostream& operator<<(std::ostream& o, const AnyType& obj);
-	friend void swap(AnyType& a, AnyType& b);
+    friend std::ostream& operator<<(std::ostream& o, const AnyType& obj);
 
 private:
 	static inline bool IsTypesMatch(const AnyType& a, const AnyType& b)

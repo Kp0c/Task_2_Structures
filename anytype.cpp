@@ -459,12 +459,12 @@ std::ostream& operator<<(std::ostream& output, const AnyType& obj)
 	return output;
 }
 
-void swap(AnyType& a, AnyType& b)
+/*void swap(AnyType& a, AnyType& b)
 {
 	using std::swap;
 	swap(a.value, b.value);
 	swap(a.selected_type, b.selected_type);
-}
+}*/
 
 //disable warnings about some bad operations, because it's up to user
 #pragma warning(push)

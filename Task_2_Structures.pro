@@ -9,5 +9,5 @@ SOURCES += \
 
 HEADERS += \
 	any_type_helper.h \
-    anytype.h \
+        anytype.h \
 	main.h

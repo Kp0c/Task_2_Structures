@@ -99,7 +99,13 @@ AnyType::AnyType(long double value)
 AnyType::AnyType(const AnyType& another)
 {
 	this->selected_type = another.selected_type;
-	this->value = another.value;
+    this->value = another.value;
+}
+
+AnyType::AnyType(AnyType&& another)
+{
+    this->selected_type = another.selected_type;
+    this->value = another.value;
 }
 
 AnyType AnyType::operator+(const AnyType& right) const
@@ -206,7 +212,15 @@ AnyType& AnyType::operator<<=(const AnyType& right)
 
 AnyType& AnyType::operator>>=(const AnyType& right)
 {
-	return operator=(operator>>(right));
+    return operator=(operator>>(right));
+}
+
+AnyType& AnyType::operator=(AnyType&& right)
+{
+    this->selected_type = right.selected_type;
+    this->value = right.value;
+
+    return *this;
 }
 
 bool AnyType::GetBool() const

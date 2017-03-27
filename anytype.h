@@ -30,6 +30,8 @@ public:
 
 	//Copy ctor
 	AnyType(const AnyType& another);
+    //Move ctor
+    AnyType(AnyType&& another);
 
 	inline void Destroy()
 	{
@@ -62,6 +64,7 @@ public:
 	AnyType& operator^=(const AnyType& right);
 	AnyType& operator<<=(const AnyType& right);
 	AnyType& operator>>=(const AnyType& right);
+    AnyType& operator=(AnyType&& right);
 
 	//geters
 	bool GetBool() const;

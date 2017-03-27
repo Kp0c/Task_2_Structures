@@ -106,6 +106,7 @@ AnyType::AnyType(AnyType&& another)
 {
     this->selected_type = another.selected_type;
     this->value = another.value;
+    another.Destroy();
 }
 
 AnyType AnyType::operator+(const AnyType& right) const
@@ -219,6 +220,8 @@ AnyType& AnyType::operator=(AnyType&& right)
 {
     this->selected_type = right.selected_type;
     this->value = right.value;
+	
+    right.Destroy();
 
     return *this;
 }

@@ -8,12 +8,8 @@ void PrintAnyType(const any_type::AnyType& anyType)
 
 int main()
 {
-    //test<std::plus<void>>();
-
-    //return 0;
-
-    any_type::AnyType a = 2;
-    any_type::AnyType b = 6;
+	any_type::AnyType a = 15.7;
+	any_type::AnyType b = 24.3;
 
 	std::swap(a, b);
     try
@@ -32,12 +28,12 @@ int main()
 
     try
 	{
-    //double stored = b.GetDouble();
-    b += 9;
+	double stored = b.GetDouble();
+	b += 9.;
 
 	a.Destroy();
 
-    a = 13;
+	a = 'd';
     std::cout << a << std::endl;
     std::cout << b << std::endl;
 	}

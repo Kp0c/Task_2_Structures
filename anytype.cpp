@@ -115,47 +115,47 @@ AnyType AnyType::operator+(const AnyType& right) const
 
 AnyType AnyType::operator-(const AnyType& right) const
 {
-    return ChooseAndDoOperation(*this, right, Minus());
+	return ChooseAndDoOperation(*this, right, Minus());
 }
 
 AnyType AnyType::operator*(const AnyType& right) const
 {
-    return ChooseAndDoOperation(*this, right, Multiplication());
+	return ChooseAndDoOperation(*this, right, Multiplication());
 }
 
 AnyType AnyType::operator/(const AnyType& right) const
 {
-    return ChooseAndDoOperation(*this, right, Divide());
+	return ChooseAndDoOperation(*this, right, Divide());
 }
 
 AnyType AnyType::operator%(const AnyType& right) const
 {
-    return ChooseAndDoOperation(*this, right, Modulo());
+	return ChooseAndDoOperation(*this, right, Modulo());
 }
 
 AnyType AnyType::operator&(const AnyType& right) const
 {
-    return ChooseAndDoOperation(*this, right, Bitwise_and());
+	return ChooseAndDoOperation(*this, right, Bitwise_and());
 }
 
 AnyType AnyType::operator|(const AnyType& right) const
 {
-    return ChooseAndDoOperation(*this, right, Bitwise_or());
+	return ChooseAndDoOperation(*this, right, Bitwise_or());
 }
 
 AnyType AnyType::operator^(const AnyType& right) const
 {
-    return ChooseAndDoOperation(*this, right, Bitwise_xor());
+	return ChooseAndDoOperation(*this, right, Bitwise_xor());
 }
 
 AnyType AnyType::operator>>(const AnyType& right) const
 {
-    return ChooseAndDoOperation(*this, right, Bitwise_right_shift());
+	return ChooseAndDoOperation(*this, right, Bitwise_right_shift());
 }
 
 AnyType AnyType::operator<<(const AnyType& right) const
 {
-    return ChooseAndDoOperation(*this, right, Bitwise_left_shift());
+	return ChooseAndDoOperation(*this, right, Bitwise_left_shift());
 }
 
 AnyType& AnyType::operator= (const AnyType& right)
@@ -212,7 +212,7 @@ AnyType& AnyType::operator<<=(const AnyType& right)
 
 AnyType& AnyType::operator>>=(const AnyType& right)
 {
-    return operator=(operator>>(right));
+	return operator=(operator>>(right));
 }
 
 AnyType& AnyType::operator=(AnyType&& right)

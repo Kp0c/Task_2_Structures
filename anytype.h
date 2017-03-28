@@ -30,8 +30,8 @@ public:
 
 	//Copy ctor
 	AnyType(const AnyType& another);
-    //Move ctor
-    AnyType(AnyType&& another);
+	//Move ctor
+	AnyType(AnyType&& another);
 
 	inline void Destroy()
 	{
@@ -66,7 +66,7 @@ public:
 	AnyType& operator>>=(const AnyType& right);
 
 	//move assignment operator
-    AnyType& operator=(AnyType&& right);
+	AnyType& operator=(AnyType&& right);
 
 	//geters
 	bool GetBool() const;
@@ -87,7 +87,7 @@ public:
 	std::string GetType() const;
 
 	//friends
-    friend std::ostream& operator<<(std::ostream& o, const AnyType& obj);
+	friend std::ostream& operator<<(std::ostream& o, const AnyType& obj);
 
 private:
 	static inline bool IsTypesMatch(const AnyType& a, const AnyType& b)

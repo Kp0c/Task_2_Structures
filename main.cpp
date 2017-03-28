@@ -8,37 +8,38 @@ void PrintAnyType(const any_type::AnyType& anyType)
 
 int main()
 {
-    any_type::AnyType a = 2;
-    any_type::AnyType b = 3.7;
+	any_type::AnyType a = 15.7;
+	any_type::AnyType b = 24.3;
 
 	std::swap(a, b);
-    /*try
-	{
+    try
+    {
 		a/=b;
 	}
 	catch (std::exception& e)
 	{
 		std::cout << e.what() << std::endl;
-    }*/
+    }
 	PrintAnyType(a);
 	PrintAnyType(b);
 	std::swap(a, b);
 	PrintAnyType(a);
     PrintAnyType(b);
 
-    /*try
+    try
 	{
-	double stored = a.GetDouble();
-	a += 5.6;
+	double stored = b.GetDouble();
+	b += 9.;
 
 	a.Destroy();
 
-	a = 'a';
-	std::cout << a << std::endl;
+	a = 'd';
+    std::cout << a << std::endl;
+    std::cout << b << std::endl;
 	}
 	catch (std::exception& e)
 	{
 		std::cout << e.what() << std::endl;
-    }*/
+    }
 	return 0;
 }

@@ -99,7 +99,7 @@ AnyType::AnyType(long double value)
 AnyType::AnyType(const AnyType& another)
 {
 	this->selected_type = another.selected_type;
-    this->value = another.value;
+	this->value = another.value;
 }
 
 AnyType::AnyType(AnyType&& another)
@@ -110,52 +110,52 @@ AnyType::AnyType(AnyType&& another)
 
 AnyType AnyType::operator+(const AnyType& right) const
 {
-	return DoOperation(*this, right, OperationType::PLUS);
+	return ChooseAndDoOperation(*this, right, Plus());
 }
 
 AnyType AnyType::operator-(const AnyType& right) const
 {
-	return DoOperation(*this, right, OperationType::MINUS);
+    return ChooseAndDoOperation(*this, right, Minus());
 }
 
 AnyType AnyType::operator*(const AnyType& right) const
 {
-	return DoOperation(*this, right, OperationType::MULTIPLICATION);
+    return ChooseAndDoOperation(*this, right, Multiplication());
 }
 
 AnyType AnyType::operator/(const AnyType& right) const
 {
-	return DoOperation(*this, right, OperationType::DIVIDE);
+    return ChooseAndDoOperation(*this, right, Divide());
 }
 
 AnyType AnyType::operator%(const AnyType& right) const
 {
-	return DoOperation(*this, right, OperationType::MODULO);
+    return ChooseAndDoOperation(*this, right, Modulo());
 }
 
 AnyType AnyType::operator&(const AnyType& right) const
 {
-	return DoOperation(*this, right, OperationType::BITWISE_AND);
+    return ChooseAndDoOperation(*this, right, Bitwise_and());
 }
 
 AnyType AnyType::operator|(const AnyType& right) const
 {
-	return DoOperation(*this, right, OperationType::BITWISE_OR);
+    return ChooseAndDoOperation(*this, right, Bitwise_or());
 }
 
 AnyType AnyType::operator^(const AnyType& right) const
 {
-	return DoOperation(*this, right, OperationType::BITWISE_XOR);
+    return ChooseAndDoOperation(*this, right, Bitwise_xor());
 }
 
 AnyType AnyType::operator>>(const AnyType& right) const
 {
-	return DoOperation(*this, right, OperationType::BITWISE_RIGHT_SHIFT);
+    return ChooseAndDoOperation(*this, right, Bitwise_right_shift());
 }
 
 AnyType AnyType::operator<<(const AnyType& right) const
 {
-	return DoOperation(*this, right, OperationType::BITWISE_LEFT_SHIFT);
+    return ChooseAndDoOperation(*this, right, Bitwise_left_shift());
 }
 
 AnyType& AnyType::operator= (const AnyType& right)
@@ -220,7 +220,7 @@ AnyType& AnyType::operator=(AnyType&& right)
 	this->selected_type = std::move(right.selected_type);
 	this->value = std::move(right.value);
 
-    return *this;
+	return *this;
 }
 
 bool AnyType::GetBool() const
@@ -458,152 +458,5 @@ std::ostream& operator<<(std::ostream& output, const AnyType& obj)
 
 	return output;
 }
-
-//disable warnings about some bad operations, because it's up to user
-#pragma warning(push)
-#pragma warning(disable:4800)
-#pragma warning(disable:4804)
-
-template<typename T>
-T AnyType::DoOperationForIntegers(T a, T b, OperationType operation) const
-{
-	switch (operation)
-	{
-	case OperationType::PLUS:
-		return a + b;
-		break;
-	case OperationType::MINUS:
-		return a - b;
-		break;
-	case OperationType::MULTIPLICATION:
-		return a * b;
-		break;
-	case OperationType::DIVIDE:
-		if (b!=0)
-			return a / b;
-		else
-			throw std::overflow_error("Divide by zero");
-		break;
-	case OperationType::MODULO:
-		if (b!=0)
-			return a % b;
-		else
-			throw std::overflow_error("Modulo by zero");
-		break;
-	case OperationType::BITWISE_AND:
-		return a & b;
-		break;
-	case OperationType::BITWISE_OR:
-		return a | b;
-		break;
-	case OperationType::BITWISE_XOR:
-		return a ^ b;
-		break;
-	case OperationType::BITWISE_LEFT_SHIFT:
-		return a << b;
-		break;
-	case OperationType::BITWISE_RIGHT_SHIFT:
-		return a >> b;
-		break;
-	default:
-		throw std::invalid_argument("bad operation");
-		break;
-	}
-}
-
-template<typename T>
-T AnyType::DoOperationForRational(T a, T b, OperationType operation) const
-{
-	switch (operation) {
-	case OperationType::PLUS:
-		return a + b;
-		break;
-	case OperationType::MINUS:
-		return a - b;
-		break;
-	case OperationType::MULTIPLICATION:
-		return a * b;
-		break;
-	case OperationType::DIVIDE:
-		if (b!=0)
-			return a / b;
-		else
-			throw std::overflow_error("Divide by zero");
-		break;
-	default:
-		throw std::invalid_argument("bad operation");
-		break;
-	}
-}
-
-AnyType AnyType::DoOperation(const AnyType& a, const AnyType& b, OperationType operation) const
-{
-	if (IsTypesMatch(a, b))
-	{
-		AnyType to_return(0);
-		to_return.selected_type = a.selected_type;
-
-		switch (this->selected_type)
-		{
-		case Type::BOOL:
-			to_return = DoOperationForIntegers<bool>(a.value.b, b.value.b, operation);
-			break;
-		case Type::CHAR:
-			to_return = DoOperationForIntegers<char>(a.value.c, b.value.c, operation);
-			break;
-		case Type::UCHAR:
-			to_return = DoOperationForIntegers<unsigned char>(a.value.uc, b.value.uc, operation);
-			break;
-		case Type::WCHAR_T:
-			to_return = DoOperationForIntegers<wchar_t>(a.value.wc_t, b.value.wc_t, operation);
-			break;
-		case Type::SHORT:
-			to_return = DoOperationForIntegers<short>(a.value.s, b.value.s, operation);
-			break;
-		case Type::USHORT:
-			to_return = DoOperationForIntegers<unsigned short>(a.value.us, b.value.us, operation);
-			break;
-		case Type::INT:
-			to_return = DoOperationForIntegers<int>(a.value.i, b.value.i, operation);
-			break;
-		case Type::UINT:
-			to_return = DoOperationForIntegers<unsigned int>(a.value.ui, b.value.ui, operation);
-			break;
-		case Type::LONG:
-			to_return = DoOperationForIntegers<long>(a.value.l, b.value.l, operation);
-			break;
-		case Type::ULONG:
-			to_return = DoOperationForIntegers<unsigned long>(a.value.ul, b.value.ul, operation);
-			break;
-		case Type::LONG_LONG:
-			to_return = DoOperationForIntegers<long long>(a.value.ll, b.value.ll, operation);
-			break;
-		case Type::ULONG_LONG:
-			to_return = DoOperationForIntegers<unsigned long long>(a.value.ull, b.value.ull, operation);
-			break;
-		case Type::FLOAT:
-			to_return = DoOperationForRational<float>(a.value.f, b.value.f, operation);
-			break;
-		case Type::DOUBLE:
-			to_return = DoOperationForRational<double>(a.value.d, b.value.d, operation);
-			break;
-		case Type::LONG_DOUBLE:
-			to_return = DoOperationForRational<long double>(a.value.ld, b.value.l, operation);
-			break;
-		default:
-			throw std::invalid_argument("undefined type");
-			break;
-		}
-
-		return to_return;
-	}
-	else
-	{
-		throw std::invalid_argument("types doesn't match");
-	}
-}
-
-//enable warnings back, bad section is behind.
-#pragma warning(pop)
 
 } //any_type

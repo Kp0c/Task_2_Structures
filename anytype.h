@@ -64,6 +64,8 @@ public:
 	AnyType& operator^=(const AnyType& right);
 	AnyType& operator<<=(const AnyType& right);
 	AnyType& operator>>=(const AnyType& right);
+
+	//move assignment operator
     AnyType& operator=(AnyType&& right);
 
 	//geters
@@ -98,12 +100,68 @@ private:
 		return a == b;
 	}
 
-	template<typename T>
-	T DoOperationForIntegers(T a, T b, any_type_helper::OperationType operation) const;
-	template<typename T>
-	T DoOperationForRational(T a, T b, any_type_helper::OperationType operation) const;
-	AnyType DoOperation(const AnyType& a, const AnyType& b,
-						any_type_helper::OperationType operation) const;
+	template<class Operation>
+	AnyType ChooseAndDoOperation(const AnyType& a, const AnyType& b, const Operation& op) const
+	{
+		if (IsTypesMatch(a, b))
+		{
+			switch (this->selected_type)
+			{
+			case Type::BOOL:
+				return AnyType(op(a.value.b,b.value.b));
+				break;
+			case Type::CHAR:
+				return AnyType(op(a.value.c, b.value.c));
+				break;
+			case Type::UCHAR:
+				return AnyType(op(a.value.uc, b.value.uc));
+				break;
+			case Type::WCHAR_T:
+				return AnyType(op(a.value.wc_t, b.value.wc_t));
+				break;
+			case Type::SHORT:
+				return AnyType(op(a.value.s, b.value.s));
+				break;
+			case Type::USHORT:
+				return AnyType(op(a.value.us, b.value.us));
+				break;
+			case Type::INT:
+				return AnyType(op(a.value.i, b.value.i));
+				break;
+			case Type::UINT:
+				return AnyType(op(a.value.ui, b.value.ui));
+				break;
+			case Type::LONG:
+				return AnyType(op(a.value.l, b.value.l));
+				break;
+			case Type::ULONG:
+				return AnyType(op(a.value.ul, b.value.ul));
+				break;
+			case Type::LONG_LONG:
+				return AnyType(op(a.value.ll, b.value.ll));
+				break;
+			case Type::ULONG_LONG:
+				return AnyType(op(a.value.ull, b.value.ull));
+				break;
+			case Type::FLOAT:
+				return AnyType(op(a.value.f, b.value.f));
+				break;
+			case Type::DOUBLE:
+				return AnyType(op(a.value.d, b.value.d));
+				break;
+			case Type::LONG_DOUBLE:
+				return AnyType(op(a.value.ld, b.value.l));
+				break;
+			default:
+				throw std::invalid_argument("undefined type");
+				break;
+			}
+		}
+		else
+		{
+			throw std::invalid_argument("types doesn't match");
+		}
+	}
 
 	any_type_helper::AnyValue value;
 	any_type_helper::Type selected_type;

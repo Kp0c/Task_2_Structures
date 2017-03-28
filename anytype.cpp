@@ -110,52 +110,52 @@ AnyType::AnyType(AnyType&& another)
 
 AnyType AnyType::operator+(const AnyType& right) const
 {
-	return DoOperation(*this, right, OperationType::PLUS);
+    return ChooseAndDoOperation(*this, right, Plus());
 }
 
 AnyType AnyType::operator-(const AnyType& right) const
 {
-	return DoOperation(*this, right, OperationType::MINUS);
+    return ChooseAndDoOperation(*this, right, Minus());
 }
 
 AnyType AnyType::operator*(const AnyType& right) const
 {
-	return DoOperation(*this, right, OperationType::MULTIPLICATION);
+    return ChooseAndDoOperation(*this, right, Multiplication());
 }
 
 AnyType AnyType::operator/(const AnyType& right) const
 {
-	return DoOperation(*this, right, OperationType::DIVIDE);
+    return ChooseAndDoOperation(*this, right, Divide());
 }
 
 AnyType AnyType::operator%(const AnyType& right) const
 {
-	return DoOperation(*this, right, OperationType::MODULO);
+    return ChooseAndDoOperation(*this, right, Modulo());
 }
 
 AnyType AnyType::operator&(const AnyType& right) const
 {
-	return DoOperation(*this, right, OperationType::BITWISE_AND);
+    return ChooseAndDoOperation(*this, right, Bitwise_and());
 }
 
 AnyType AnyType::operator|(const AnyType& right) const
 {
-	return DoOperation(*this, right, OperationType::BITWISE_OR);
+    return ChooseAndDoOperation(*this, right, Bitwise_or());
 }
 
 AnyType AnyType::operator^(const AnyType& right) const
 {
-	return DoOperation(*this, right, OperationType::BITWISE_XOR);
+    return ChooseAndDoOperation(*this, right, Bitwise_xor());
 }
 
 AnyType AnyType::operator>>(const AnyType& right) const
 {
-	return DoOperation(*this, right, OperationType::BITWISE_RIGHT_SHIFT);
+    return ChooseAndDoOperation(*this, right, Bitwise_right_shift());
 }
 
 AnyType AnyType::operator<<(const AnyType& right) const
 {
-	return DoOperation(*this, right, OperationType::BITWISE_LEFT_SHIFT);
+    return ChooseAndDoOperation(*this, right, Bitwise_left_shift());
 }
 
 AnyType& AnyType::operator= (const AnyType& right)
@@ -464,10 +464,11 @@ std::ostream& operator<<(std::ostream& output, const AnyType& obj)
 #pragma warning(disable:4800)
 #pragma warning(disable:4804)
 
-template<typename T>
-T DoOperationForIntegers(T a, T b, OperationType operation)
+/*template<typename T, class Operation>
+    typename std::enable_if<std::is_integral<T>::value, T>::type
+        DoOperation(T a, T b, Operation operation)
 {
-	switch (operation)
+    switch (operation)
 	{
 	case OperationType::PLUS:
 		return a + b;
@@ -508,13 +509,14 @@ T DoOperationForIntegers(T a, T b, OperationType operation)
 	default:
 		throw std::invalid_argument("bad operation");
 		break;
-	}
+    }
 }
 
 template<typename T>
-T DoOperationForRational(T a, T b, OperationType operation)
+    typename std::enable_if<std::is_floating_point<T>::value, T>::type
+        DoOperation(T a, T b, OperationType operation)
 {
-	switch (operation) {
+    switch (operation) {
 	case OperationType::PLUS:
 		return a + b;
 		break;
@@ -533,69 +535,66 @@ T DoOperationForRational(T a, T b, OperationType operation)
 	default:
 		throw std::invalid_argument("bad operation");
 		break;
-	}
-}
+    }
+}*/
 
-AnyType AnyType::DoOperation(const AnyType& a, const AnyType& b, OperationType operation) const
+template<class Operation>
+AnyType AnyType::ChooseAndDoOperation(const AnyType& a, const AnyType& b, const Operation& op) const
 {
 	if (IsTypesMatch(a, b))
-	{
-		AnyType to_return(0);
-		to_return.selected_type = a.selected_type;
-
-		switch (this->selected_type)
+    {
+        switch (this->selected_type)
 		{
 		case Type::BOOL:
-			to_return = DoOperationForIntegers<bool>(a.value.b, b.value.b, operation);
-			break;
-		case Type::CHAR:
-			to_return = DoOperationForIntegers<char>(a.value.c, b.value.c, operation);
-			break;
-		case Type::UCHAR:
-			to_return = DoOperationForIntegers<unsigned char>(a.value.uc, b.value.uc, operation);
-			break;
-		case Type::WCHAR_T:
-			to_return = DoOperationForIntegers<wchar_t>(a.value.wc_t, b.value.wc_t, operation);
-			break;
-		case Type::SHORT:
-			to_return = DoOperationForIntegers<short>(a.value.s, b.value.s, operation);
-			break;
-		case Type::USHORT:
-			to_return = DoOperationForIntegers<unsigned short>(a.value.us, b.value.us, operation);
-			break;
-		case Type::INT:
-			to_return = DoOperationForIntegers<int>(a.value.i, b.value.i, operation);
-			break;
-		case Type::UINT:
-			to_return = DoOperationForIntegers<unsigned int>(a.value.ui, b.value.ui, operation);
-			break;
-		case Type::LONG:
-			to_return = DoOperationForIntegers<long>(a.value.l, b.value.l, operation);
-			break;
-		case Type::ULONG:
-			to_return = DoOperationForIntegers<unsigned long>(a.value.ul, b.value.ul, operation);
-			break;
-		case Type::LONG_LONG:
-			to_return = DoOperationForIntegers<long long>(a.value.ll, b.value.ll, operation);
-			break;
-		case Type::ULONG_LONG:
-			to_return = DoOperationForIntegers<unsigned long long>(a.value.ull, b.value.ull, operation);
-			break;
-		case Type::FLOAT:
-			to_return = DoOperationForRational<float>(a.value.f, b.value.f, operation);
-			break;
-		case Type::DOUBLE:
-			to_return = DoOperationForRational<double>(a.value.d, b.value.d, operation);
-			break;
-		case Type::LONG_DOUBLE:
-			to_return = DoOperationForRational<long double>(a.value.ld, b.value.l, operation);
-			break;
+            return AnyType(op(a.value.b,b.value.b));
+            break;
+        case Type::CHAR:
+            return AnyType(op(a.value.c, b.value.c));
+            break;
+        case Type::UCHAR:
+            return AnyType(op(a.value.uc, b.value.uc));
+            break;
+        case Type::WCHAR_T:
+            return AnyType(op(a.value.wc_t, b.value.wc_t));
+            break;
+        case Type::SHORT:
+            return AnyType(op(a.value.s, b.value.s));
+            break;
+        case Type::USHORT:
+            return AnyType(op(a.value.us, b.value.us));
+            break;
+        case Type::INT:
+            return AnyType(op(a.value.i, b.value.i));
+            break;
+        case Type::UINT:
+            return AnyType(op(a.value.ui, b.value.ui));
+            break;
+        case Type::LONG:
+            return AnyType(op(a.value.l, b.value.l));
+            break;
+        case Type::ULONG:
+            return AnyType(op(a.value.ul, b.value.ul));
+            break;
+        case Type::LONG_LONG:
+            return AnyType(op(a.value.ll, b.value.ll));
+            break;
+        case Type::ULONG_LONG:
+            return AnyType(op(a.value.ull, b.value.ull));
+            break;
+            //TODO: fix it :)
+        case Type::FLOAT:
+            return AnyType(op(a.value.f, b.value.f));
+            break;
+        case Type::DOUBLE:
+            return AnyType(op(a.value.d, b.value.d));
+            break;
+        case Type::LONG_DOUBLE:
+            return AnyType(op(a.value.ld, b.value.l));
+            break;
 		default:
 			throw std::invalid_argument("undefined type");
 			break;
-		}
-
-		return to_return;
+        }
 	}
 	else
 	{

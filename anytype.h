@@ -100,8 +100,12 @@ private:
 		return a == b;
 	}
 
-	AnyType DoOperation(const AnyType& a, const AnyType& b,
-						any_type_helper::OperationType operation) const;
+    //AnyType ChooseAndDoOperation(const AnyType& a, const AnyType& b,
+    //					any_type_helper::OperationType operation) const;
+
+    //forward declaration
+    template<class Operation>
+    AnyType ChooseAndDoOperation(const AnyType& a, const AnyType& b, const Operation& op) const;
 
 	any_type_helper::AnyValue value;
 	any_type_helper::Type selected_type;

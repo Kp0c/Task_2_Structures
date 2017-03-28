@@ -48,8 +48,11 @@ union AnyValue
 //custom operators
 //disable warnings about some bad operations, because it's up to user
 #pragma warning(push)
-#pragma warning(disable:4800)
-#pragma warning(disable:4804)
+#pragma warning(disable:4800) //bool
+#pragma warning(disable:4804) //bool
+#pragma warning(disable:4244) //compiler thinks that there bad conversation
+							  //(Modulo with floating points)
+
 struct Plus
 {
 	template<class T, class U>
@@ -97,16 +100,17 @@ struct Modulo
 
 	//special mod from <cmath> for floating point types
 	template<class T, class U>
-	typename std::enable_if<std::is_floating_point<T>::value, T>::type operator() (T& lhs, U& rhs) const
+	typename std::enable_if<std::is_floating_point<T>::value, T>::type
+	operator() (T& lhs, U& rhs) const
 	{
 		const std::type_info& type_id = typeid(T);
 
-		if(type_id == typeid(float))
-			return fmodf(lhs,rhs);
-		else if(type_id == typeid(double))
-			return fmod(lhs,rhs);
-		else if(type_id == typeid(long double))
-			return fmodl(lhs,rhs);
+		if (type_id == typeid(float))
+			return fmodf(lhs, rhs);
+		else if (type_id == typeid(double))
+			return fmod(lhs, rhs);
+		else if (type_id == typeid(long double))
+			return fmodl(lhs, rhs);
 		else
 			throw std::invalid_argument("floating in modulo");
 	}
@@ -123,7 +127,7 @@ struct Bitwise_and
 
 	//Bad operation for floating point types
 	template<class T, class U>
-	typename std::enable_if<std::is_floating_point<T>::value, T>::type operator() (T,U) const
+	typename std::enable_if<std::is_floating_point<T>::value, T>::type operator() (T, U) const
 	{
 		throw std::invalid_argument("floating point in Bitwise_and");
 	}
@@ -140,7 +144,7 @@ struct Bitwise_or
 
 	//Bad operation for floating point types
 	template<class T, class U>
-	typename std::enable_if<std::is_floating_point<T>::value, T>::type operator() (T,U) const
+	typename std::enable_if<std::is_floating_point<T>::value, T>::type operator() (T, U) const
 	{
 		throw std::invalid_argument("floating in Bitwise_or");
 	}
@@ -157,7 +161,7 @@ struct Bitwise_xor
 
 	//Bad operation for floating point types
 	template<class T, class U>
-	typename std::enable_if<std::is_floating_point<T>::value, T>::type operator() (T,U) const
+	typename std::enable_if<std::is_floating_point<T>::value, T>::type operator() (T, U) const
 	{
 		throw std::invalid_argument("floating in Bitwise_xor");
 	}
@@ -174,7 +178,7 @@ struct Bitwise_right_shift
 
 	//Bad operation for floating point types
 	template<class T, class U>
-	typename std::enable_if<std::is_floating_point<T>::value, T>::type operator() (T,U) const
+	typename std::enable_if<std::is_floating_point<T>::value, T>::type operator() (T, U) const
 	{
 		throw std::invalid_argument("floating in Bitwise_right_shift");
 	}
@@ -191,7 +195,7 @@ struct Bitwise_left_shift
 
 	//Bad operation for floating point types
 	template<class T, class U>
-	typename std::enable_if<std::is_floating_point<T>::value, T>::type operator() (T,U) const
+	typename std::enable_if<std::is_floating_point<T>::value, T>::type operator() (T, U) const
 	{
 		throw std::invalid_argument("floating in Bitwise_left_shift");
 	}

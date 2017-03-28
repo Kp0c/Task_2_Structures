@@ -108,7 +108,7 @@ private:
 			switch (this->selected_type)
 			{
 			case Type::BOOL:
-				return AnyType(op(a.value.b,b.value.b));
+				return AnyType(op(a.value.b, b.value.b));
 				break;
 			case Type::CHAR:
 				return AnyType(op(a.value.c, b.value.c));

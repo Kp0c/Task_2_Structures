@@ -6,101 +6,84 @@ using namespace any_type_helper;
 namespace any_type
 {
 
-AnyType::AnyType(bool value)
+AnyType::AnyType(bool value) : selected_type(Type::BOOL)
 {
-	selected_type = Type::BOOL;
 	this->value.b = value;
 }
 
-AnyType::AnyType(char value)
+AnyType::AnyType(char value) : selected_type(Type::CHAR)
 {
-	selected_type = Type::CHAR;
 	this->value.c = value;
 }
 
-AnyType::AnyType(unsigned char value)
+AnyType::AnyType(unsigned char value) : selected_type(Type::UCHAR)
 {
-	selected_type = Type::UCHAR;
 	this->value.uc = value;
 }
 
-AnyType::AnyType(wchar_t value)
+AnyType::AnyType(wchar_t value) : selected_type(Type::WCHAR_T)
 {
-	selected_type = Type::WCHAR_T;
 	this->value.wc_t = value;
 }
 
-AnyType::AnyType(short value)
+AnyType::AnyType(short value) : selected_type(Type::SHORT)
 {
-	selected_type = Type::SHORT;
 	this->value.s = value;
 }
 
-AnyType::AnyType(unsigned short value)
+AnyType::AnyType(unsigned short value) : selected_type(Type::USHORT)
 {
-	selected_type = Type::USHORT;
 	this->value.us = value;
 }
 
-AnyType::AnyType(int value)
+AnyType::AnyType(int value) : selected_type(Type::INT)
 {
-	selected_type = Type::INT;
 	this->value.i = value;
 }
 
-AnyType::AnyType(unsigned int value)
+AnyType::AnyType(unsigned int value) : selected_type(Type::UINT)
 {
-	selected_type = Type::UINT;
 	this->value.ui = value;
 }
 
-AnyType::AnyType(long value)
+AnyType::AnyType(long value) : selected_type(Type::LONG)
 {
-	selected_type = Type::LONG;
 	this->value.l = value;
 }
 
-AnyType::AnyType(unsigned long value)
+AnyType::AnyType(unsigned long value) : selected_type(Type::ULONG)
 {
-	selected_type = Type::ULONG;
 	this->value.ul = value;
 }
 
-AnyType::AnyType(long long value)
+AnyType::AnyType(long long value) : selected_type(Type::LONG_LONG)
 {
-	selected_type = Type::LONG_LONG;
 	this->value.ll = value;
 }
 
-AnyType::AnyType(unsigned long long value)
+AnyType::AnyType(unsigned long long value) : selected_type(Type::ULONG_LONG)
 {
-	selected_type = Type::ULONG_LONG;
 	this->value.ull = value;
 }
 
-AnyType::AnyType(float value)
+AnyType::AnyType(float value) : selected_type(Type::FLOAT)
 {
-	selected_type = Type::FLOAT;
 	this->value.f = value;
 }
 
-AnyType::AnyType(double value)
+AnyType::AnyType(double value) : selected_type(Type::DOUBLE)
 {
-	selected_type = Type::DOUBLE;
 	this->value.d = value;
 }
 
-AnyType::AnyType(long double value)
+AnyType::AnyType(long double value) : selected_type(Type::LONG_DOUBLE)
 {
-	selected_type = Type::LONG_DOUBLE;
 	this->value.ld = value;
 }
 
-AnyType::AnyType(const AnyType& another)
-{
-	this->selected_type = another.selected_type;
-	this->value = another.value;
-}
+AnyType::AnyType(const AnyType& another) : selected_type(another.selected_type)
+										 , value(another.value)
+{ }
 
 AnyType::AnyType(AnyType&& another)
 {

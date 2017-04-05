@@ -93,41 +93,45 @@ AnyType::AnyType(AnyType&& another)
 
 AnyType AnyType::operator+(const AnyType& right) const
 {
-	return ChooseAndDoOperation(*this, right, Plus());
+	return ChooseAndDoOperation(*this, right, std::plus<>());
 }
 
 AnyType AnyType::operator-(const AnyType& right) const
 {
-	return ChooseAndDoOperation(*this, right, Minus());
+	return ChooseAndDoOperation(*this, right, std::minus<>());
 }
 
 AnyType AnyType::operator*(const AnyType& right) const
 {
-	return ChooseAndDoOperation(*this, right, Multiplication());
+	return ChooseAndDoOperation(*this, right, std::multiplies<>());
 }
 
 AnyType AnyType::operator/(const AnyType& right) const
 {
-	return ChooseAndDoOperation(*this, right, Divide());
+	return ChooseAndDoOperation(*this, right, std::divides<>());
 }
 
 AnyType AnyType::operator%(const AnyType& right) const
 {
+	//i can't use std::modulus, because further there's an be floating type
 	return ChooseAndDoOperation(*this, right, Modulo());
 }
 
 AnyType AnyType::operator&(const AnyType& right) const
 {
+	//i can't use std::bit_and, because further there's an be floating type
 	return ChooseAndDoOperation(*this, right, Bitwise_and());
 }
 
 AnyType AnyType::operator|(const AnyType& right) const
 {
+	//i can't use std::bit_or, because further there's an be floating type
 	return ChooseAndDoOperation(*this, right, Bitwise_or());
 }
 
 AnyType AnyType::operator^(const AnyType& right) const
 {
+	//i can't use std::bit_xor, because further there's an be floating type
 	return ChooseAndDoOperation(*this, right, Bitwise_xor());
 }
 
@@ -143,8 +147,11 @@ AnyType AnyType::operator<<(const AnyType& right) const
 
 AnyType& AnyType::operator= (const AnyType& right)
 {
-	this->selected_type = right.selected_type;
-	this->value = right.value;
+	if(&right != this)
+	{
+		this->selected_type = right.selected_type;
+		this->value = right.value;
+	}
 	return *this;
 }
 
@@ -200,8 +207,11 @@ AnyType& AnyType::operator>>=(const AnyType& right)
 
 AnyType& AnyType::operator=(AnyType&& right)
 {
-	this->selected_type = std::move(right.selected_type);
-	this->value = std::move(right.value);
+	if(this != &right)
+	{
+		this->selected_type = std::move(right.selected_type);
+		this->value = std::move(right.value);
+	}
 
 	return *this;
 }
@@ -434,8 +444,10 @@ std::ostream& operator<<(std::ostream& output, const AnyType& obj)
 	case Type::LONG_DOUBLE:
 		output << obj.value.ld;
 		break;
-	default:
+	case Type::NONE:
 		throw std::invalid_argument("Bad type");
+	default:
+		throw std::invalid_argument("Undefined type");
 		break;
 	}
 

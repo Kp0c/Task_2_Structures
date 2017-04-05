@@ -8,6 +8,7 @@ namespace any_type_helper
 
 enum class Type
 {
+	NONE,
 	BOOL,
 	CHAR,
 	UCHAR,
@@ -22,8 +23,7 @@ enum class Type
 	ULONG_LONG,
 	FLOAT,
 	DOUBLE,
-	LONG_DOUBLE,
-	NONE
+	LONG_DOUBLE
 };
 
 union AnyValue
@@ -52,42 +52,6 @@ union AnyValue
 #pragma warning(disable:4804) //bool
 #pragma warning(disable:4244) //compiler thinks that there bad conversation
 							  //(Modulo with floating points)
-
-struct Plus
-{
-	template<class T, class U>
-	T operator()(T& lhs, U& rhs) const
-	{
-		return lhs + rhs;
-	}
-};
-
-struct Minus
-{
-	template<class T, class U>
-	T operator()(T& lhs, U& rhs) const
-	{
-		return lhs - rhs;
-	}
-};
-
-struct Multiplication
-{
-	template<class T, class U>
-	T operator()(T& lhs, U& rhs) const
-	{
-		return lhs * rhs;
-	}
-};
-
-struct Divide
-{
-	template<class T, class U>
-	T operator()(T& lhs, U& rhs) const
-	{
-		return lhs / rhs;
-	}
-};
 
 struct Modulo
 {

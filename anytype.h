@@ -2,6 +2,7 @@
 
 #include <ostream>
 #include <exception>
+#include <functional>
 
 #include "any_type_helper.h"
 
@@ -152,14 +153,16 @@ private:
 			case Type::LONG_DOUBLE:
 				return AnyType(op(a.value.ld, b.value.l));
 				break;
+			case Type::NONE:
+				throw std::invalid_argument("Bad type");
 			default:
-				throw std::invalid_argument("undefined type");
+				throw std::invalid_argument("Undefined type");
 				break;
 			}
 		}
 		else
 		{
-			throw std::invalid_argument("types doesn't match");
+			throw std::invalid_argument("Types doesn't match");
 		}
 	}
 

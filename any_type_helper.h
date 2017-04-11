@@ -50,8 +50,7 @@ union AnyValue
 #pragma warning(push)
 #pragma warning(disable:4800) //bool
 #pragma warning(disable:4804) //bool
-#pragma warning(disable:4244) //compiler thinks that there bad conversation
-							  //(Modulo with floating points)
+#pragma warning(disable:4244) //compiler thinks that there bad conversation (Modulo with floating points)
 
 struct Modulo
 {

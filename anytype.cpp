@@ -82,7 +82,7 @@ AnyType::AnyType(long double value) : selected_type(Type::LONG_DOUBLE)
 }
 
 AnyType::AnyType(const AnyType& another) : selected_type(another.selected_type)
-										 , value(another.value)
+					 , value(another.value)
 { }
 
 AnyType::AnyType(AnyType&& another)

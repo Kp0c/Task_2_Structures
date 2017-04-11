@@ -11,6 +11,15 @@ int main()
 	any_type::AnyType a = 15.7;
 	any_type::AnyType b = 24.3;
 
+	std::cout << a + b << std::endl;
+	std::cout << a - b << std::endl;
+	std::cout << a * b << std::endl;
+	std::cout << a / b << std::endl;
+	std::cout << b % a << std::endl;
+	/*std::cout << b | a << std::endl;
+	std::cout << b << a << std::endl;
+	std::cout << b >> a << std::endl;*/
+
 	std::swap(a, b);
 	try
 	{

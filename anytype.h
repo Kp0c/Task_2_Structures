@@ -12,7 +12,6 @@ namespace any_type
 class AnyType
 {
 public:
-	//Constructors area
 	AnyType(bool value);
 	AnyType(char value);
 	AnyType(unsigned char value);
@@ -29,9 +28,7 @@ public:
 	AnyType(double value);
 	AnyType(long double value);
 
-	//Copy ctor
 	AnyType(const AnyType& another);
-	//Move ctor
 	AnyType(AnyType&& another);
 
 	inline void Destroy()
@@ -41,7 +38,6 @@ public:
 	}
 
 
-	//Operators overload area
 	AnyType operator+(const AnyType& right) const;
 	AnyType operator-(const AnyType& right) const;
 	AnyType operator*(const AnyType& right) const;
@@ -53,7 +49,6 @@ public:
 	AnyType operator<<(const AnyType& right) const;
 	AnyType operator>>(const AnyType& right) const;
 
-	//Assignment operators
 	AnyType& operator=(const AnyType& right);
 	AnyType& operator+=(const AnyType& right);
 	AnyType& operator-=(const AnyType& right);
@@ -66,10 +61,8 @@ public:
 	AnyType& operator<<=(const AnyType& right);
 	AnyType& operator>>=(const AnyType& right);
 
-	//move assignment operator
 	AnyType& operator=(AnyType&& right);
 
-	//geters
 	bool GetBool() const;
 	char GetChar() const;
 	unsigned char GetUnsignedChar() const;
@@ -87,7 +80,6 @@ public:
 	long double GetLongDouble() const;
 	std::string GetType() const;
 
-	//friends
 	friend std::ostream& operator<<(std::ostream& o, const AnyType& obj);
 
 private:

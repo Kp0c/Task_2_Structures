@@ -145,7 +145,7 @@ AnyType AnyType::operator<<(const AnyType& right) const
 	return ChooseAndDoOperation(*this, right, Bitwise_left_shift());
 }
 
-AnyType& AnyType::operator= (const AnyType& right)
+AnyType& AnyType::operator=(const AnyType& right)
 {
 	if(&right != this)
 	{
